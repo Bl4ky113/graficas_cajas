@@ -1,0 +1,167 @@
+
+$color_base: rgb(0, 36, 156);
+$color_light: rgb(60, 63, 255);
+$color_dark: rgb(0, 1, 82);
+
+$color_black: #000;
+$color_white: #fff;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template: minmax(5vh, auto) 1fr minmax(5vh, auto) / 3% 25% 1fr 3%;
+  grid-template-areas: "header  header header  header "
+                       "blank_1 nav    content blank_2"
+                       "footer  footer footer  footer ";
+
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: $color_base;
+
+  grid-area: header;
+}
+
+.nav-wrapper {
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+
+  box-shadow: 0 0 10px -5px $color_black;
+
+  grid-area: nav;
+
+  .nav {
+    border: 2px solid $color_base;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+
+    .nav__list {
+      list-style: none;
+    }
+
+    .nav__link {
+      border-left: 2px solid $color_base;
+
+      &::before {
+        content: "\f101";
+
+        padding: 0 0.25rem;
+
+        color: $color_base;
+        font: 500 1em "FontAwesome";
+      }
+
+      a {
+        color: $color_black;
+        font: 400 1em "Roboto", sans-serif;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          color: $color_base;
+          text-decoration: underline solid $color_base 1px;
+        }
+      }
+    }
+  }
+}
+
+.content {
+  margin: 0 0.5rem;
+  padding: 1rem;
+
+  box-shadow: 0 0 10px -5px $color_black;
+
+  grid-area: content;
+
+  .title {
+    margin: 0.15rem 0;
+    border-bottom: 2px solid $color_dark;
+
+    color: $color_dark;
+    font: 800 1.15em "Roboto Mono", monospace;
+  }
+
+  .semititle {
+    margin: 0.1rem 0;
+
+    color: $color_black;
+    font: 500 1em "Roboto Mono", monospace;
+    text-decoration: underline solid $color_dark 2px;
+  }
+
+  .text {
+    color: $color_black;
+    font: 400 0.95em "Roboto", sans-serif;
+  }
+
+  .formula {
+    max-width: 50vw;
+
+    margin: 0.15rem auto;
+    border: 2px solid $color_base;
+    border-radius: 0.25rem;
+    padding: 0.1rem;
+
+    color: $color_base;
+    font: 400 1em "Roboto Slab", serif;
+    text-align: center;
+  }
+
+  .link {
+    color: $color_black;
+    font: 500 1em "Roboto", sans-serif;
+    text-decoration: underline solid $color_base 2px;
+
+    &:hover, &:focus { color: $color_base; }
+  }
+
+  .canvas {
+    width: 100%;
+    min-height: 55vh;
+
+    border: 2px solid $color_base;
+    border-radius: 0.25rem;
+
+    background-color: $color_white;
+
+    color: $color_black;
+    font: 500 1em "Roboto Mono", sans-serif;
+  }
+
+  .section {
+    margin: 1rem 0;
+    border: 2px solid $color_dark;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+
+    display: grid;
+    grid-template: auto / 1fr minmax(auto, 1fr);
+    grid-template-areas: "content canvas";
+
+    .content-wrapper { grid-area: content; }
+    .canvas-wrapper {
+      margin: 0.15rem;
+      margin-left: 0.5rem;
+      padding: 0.15rem;
+      
+      grid-area: canvas; 
+      
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+  }
+}
+
+.footer {
+  background-color: $color_dark;
+
+  grid-area: footer;
+}

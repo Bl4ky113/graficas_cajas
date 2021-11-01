@@ -1,0 +1,127 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template: minmax(5vh, auto) 1fr minmax(5vh, auto)/3% 25% 1fr 3%;
+  grid-template-areas: "header  header header  header " "blank_1 nav    content blank_2" "footer  footer footer  footer ";
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #00249c;
+  grid-area: header;
+}
+
+.nav-wrapper {
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 10px -5px #000;
+  grid-area: nav;
+}
+.nav-wrapper .nav {
+  border: 2px solid #00249c;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+.nav-wrapper .nav .nav__list {
+  list-style: none;
+}
+.nav-wrapper .nav .nav__link {
+  border-left: 2px solid #00249c;
+}
+.nav-wrapper .nav .nav__link::before {
+  content: "";
+  padding: 0 0.25rem;
+  color: #00249c;
+  font: 500 1em "FontAwesome";
+}
+.nav-wrapper .nav .nav__link a {
+  color: #000;
+  font: 400 1em "Roboto", sans-serif;
+  text-decoration: none;
+}
+.nav-wrapper .nav .nav__link a:hover, .nav-wrapper .nav .nav__link a:focus {
+  color: #00249c;
+  text-decoration: underline solid #00249c 1px;
+}
+
+.content {
+  margin: 0 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px -5px #000;
+  grid-area: content;
+}
+.content .title {
+  margin: 0.15rem 0;
+  border-bottom: 2px solid #000152;
+  color: #000152;
+  font: 800 1.15em "Roboto Mono", monospace;
+}
+.content .semititle {
+  margin: 0.1rem 0;
+  color: #000;
+  font: 500 1em "Roboto Mono", monospace;
+  text-decoration: underline solid #000152 2px;
+}
+.content .text {
+  color: #000;
+  font: 400 0.95em "Roboto", sans-serif;
+}
+.content .formula {
+  max-width: 50vw;
+  margin: 0.15rem auto;
+  border: 2px solid #00249c;
+  border-radius: 0.25rem;
+  padding: 0.1rem;
+  color: #00249c;
+  font: 400 1em "Roboto Slab", serif;
+  text-align: center;
+}
+.content .link {
+  color: #000;
+  font: 500 1em "Roboto", sans-serif;
+  text-decoration: underline solid #00249c 2px;
+}
+.content .link:hover, .content .link:focus {
+  color: #00249c;
+}
+.content .canvas {
+  width: 100%;
+  min-height: 55vh;
+  border: 2px solid #00249c;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  color: #000;
+  font: 500 1em "Roboto Mono", sans-serif;
+}
+.content .section {
+  margin: 1rem 0;
+  border: 2px solid #000152;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  display: grid;
+  grid-template: auto/1fr minmax(auto, 1fr);
+  grid-template-areas: "content canvas";
+}
+.content .section .content-wrapper {
+  grid-area: content;
+}
+.content .section .canvas-wrapper {
+  margin: 0.15rem;
+  margin-left: 0.5rem;
+  padding: 0.15rem;
+  grid-area: canvas;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.footer {
+  background-color: #000152;
+  grid-area: footer;
+}
