@@ -13,8 +13,23 @@
 }
 
 .header {
+  padding: 0.5rem;
   background-color: #00249c;
   grid-area: header;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+.header .header__title {
+  border-bottom: 2px solid #3c3fff;
+  padding: 0 5rem;
+  color: #fff;
+  font: 700 2.5rem "Roboto Condensed", sans-serif;
+}
+.header .header__text {
+  color: #000;
+  font: 500 1rem "Roboto Mono", monospace;
+  text-decoration: underline solid #000 2px;
 }
 
 .nav-wrapper {
