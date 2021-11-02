@@ -117,7 +117,9 @@ $color_white: #fff;
   }
 
   .text {
-    margin: 0.5rem 0;
+    width: 90%;
+
+    margin: 0.5rem auto;
 
     color: $color_black;
     font: 400 0.95em "Roboto", sans-serif;
@@ -146,7 +148,7 @@ $color_white: #fff;
 
   .canvas {
     width: 100%;
-    min-height: 55vh;
+    min-height: 60vh;
 
     border: 2px solid $color_base;
     border-radius: 0.25rem;
