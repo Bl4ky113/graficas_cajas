@@ -84,6 +84,7 @@
   text-decoration: underline solid #000152 2px;
 }
 .content .text {
+  margin: 0.5rem 0;
   color: #000;
   font: 400 0.95em "Roboto", sans-serif;
 }
@@ -125,6 +126,9 @@
 }
 .content .section .content-wrapper {
   grid-area: content;
+  display: grid;
+  grid-template: auto 1fr 1fr/1fr;
+  align-items: center;
 }
 .content .section .canvas-wrapper {
   margin: 0.15rem;

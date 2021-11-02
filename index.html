@@ -28,18 +28,122 @@
     <div class="nav-wrapper">
       <nav class="nav">
         <ul class="nav__list">
+          <li class="nav__link"><a href="#inicio-graphFunct">Intro - Graphs & Functions</a></li>
+          <li class="nav__link"><a href="#graph-large">Graph - Base Large</a></li>
+          <li class="nav__link"><a href="#graph-width">Graph - Base Width</a></li>
+          <li class="nav__link"><a href="#graph-areaCut">Graph - Cut Area</a></li>
+          <li class="nav__link"><a href="#graph-areaPaper">Graph - Paper Area</a></li>
+          <li class="nav__link"><a href="#graph-areaBase">Graph - Base Area</a></li>
+          <li class="nav__link"><a href="#graph-volume">Graph - Volume</a></li>
         </ul>
       </nav>
     </div>
     <main class="content">
+      <p class="title" id="inicio-graphFunct">Inicio - Graficas y Funciones de Cajas</p>
+      <p class="semititle">Retomando los Proyectos Pasados</p>
+      <p class="text">
+        Volviendo a ver los trabajos que he hecho de programación, me encantaría iniciar con esté exactamente. Y estoy imprecionado 
+        por lo tanto que he evolucionado en esté ambito en menos de un año. Aunque debo admitir que mi yo del pasado tambien da pelea 
+        con las soluciones que hacía, solo me faltaba un mayor conocimiento sobre el tema y estaría excelente. 
+      </p>
+      <p class="text">
+        Y ese es el objetivo principal de este proyecto, tomar las soluciones que tenía hacia
+        solo teniendo mi cabeza y ahora potenciarlas con el conocimiento que he obtenido a lo largo de esté año.
+      </p>
+      <p class="semititle">Ejercicio Funciones y Graficas de Cajas</p>
+      <p class="text">
+        Este ejercicio consta de realizar las graficas de unas funciones, que eran a partir de una caja sin tapa
+        hechas de papel. Aunque en el original solo se realiza las graficas, me encantaría hacer tambien la tabla de 
+        verdad sobre las funciones.
+      </p>
       <section class="section">
         <div class="content-wrapper">
-          
+          <p class="title" id="graph-large">Grafica - Función del Largo</p>
+          <p class="text">
+            Es una función que nos permite calcular el largo o el lado largo de la base de la caja. 
+          </p>
+          <p class="formula">
+            f<sub>1</sub>(x) = l = -2x + 24;
+          </p>
         </div>
         <div class="canvas-wrapper">
-          <canvas class="canvas">Canvas' Not Supported in this Browser</canvas>
+          <canvas class="canvas" id="canvas_large">Canvas' Not Supported in this Browser</canvas>
         </div>
       </section>
+      <section class="section">
+        <div class="content-wrapper">
+          <p class="title" id="graph-width">Grafica - Función del Ancho</p>
+          <p class="text">
+            Es una función que nos permite calcular el ancho o el lado corto de la base de la caja. 
+          </p>
+          <p class="formula">
+            f<sub>2</sub>(x) = w = -2x + 20;
+          </p>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas class="canvas" id="canvas_width">Canvas' Not Supported in this Browser</canvas>
+        </div>
+      </section>
+      <section class="section">
+        <div class="content-wrapper">
+          <p class="title" id="graph-areaCut">Grafica - Función del Área Desperdiciada</p>
+          <p class="text">
+            Es una función que nos permite calcular el área desperdiciada al momento de cortar el papel y realizar la caja. 
+          </p>
+          <p class="formula">
+            f<sub>3</sub>(x) = d<sup>2</sup> = 4x<sup>2</sup>;
+          </p>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas class="canvas" id="canvas_area_cut">Canvas' Not Supported in this Browser</canvas>
+        </div>
+      </section>
+      <section class="section">
+        <div class="content-wrapper">
+          <p class="title" id="graph-areaPaper">Grafica - Función del Área del Papel</p>
+          <p class="text">
+            Es una función que nos permite calcular el Área de todo el papel de la caja. 
+          </p>
+          <p class="formula">
+            f<sub>4</sub>(x) = p<sup>2</sup> = -4x<sup>2</sup>;
+          </p>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas class="canvas" id="canvas_area_paper">Canvas' Not Supported in this Browser</canvas>
+        </div>
+      </section>
+      <section class="section">
+        <div class="content-wrapper">
+          <p class="title" id="graph-areaBase">Grafica - Función del Área de la Base</p>
+          <p class="text">
+            Es una función que nos permite calcular el Área de la base de la caja. 
+          </p>
+          <p class="formula">
+            f<sub>5</sub>(x) = a<sup>2</sup> = 4x<sup>2</sup> - 88x + 480;
+          </p>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas class="canvas" id="canvas_area_base">Canvas' Not Supported in this Browser</canvas>
+        </div>
+      </section>
+      <section class="section">
+        <div class="content-wrapper">
+          <p class="title" id="graph-volume">Grafica - Función del Volumen</p>
+          <p class="text">
+            Es una función que nos permite calcular el volumen de la caja. 
+          </p>
+          <p class="formula">
+            f<sub>6</sub>(x) = v<sup>3</sup> = 4x<sup>3</sup> - 88x<sup>2</sup> + 480;
+          </p>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas class="canvas" id="canvas_volume">Canvas' Not Supported in this Browser</canvas>
+        </div>
+      </section>
+      <p class="title">Tabla de Valores de las Funciones</p>
+      <div class="table-wrapper">
+        
+      </div>
     </main>
     <footer class="footer">
   

@@ -117,6 +117,8 @@ $color_white: #fff;
   }
 
   .text {
+    margin: 0.5rem 0;
+
     color: $color_black;
     font: 400 0.95em "Roboto", sans-serif;
   }
@@ -165,7 +167,13 @@ $color_white: #fff;
     grid-template: auto / 1fr minmax(auto, 1fr);
     grid-template-areas: "content canvas";
 
-    .content-wrapper { grid-area: content; }
+    .content-wrapper { 
+      grid-area: content; 
+
+      display: grid;
+      grid-template: auto 1fr 1fr / 1fr;
+      align-items: center;
+    }
     .canvas-wrapper {
       margin: 0.15rem;
       margin-left: 0.5rem;
