@@ -34,15 +34,50 @@ var hex_colors = {
 };
 var NUM_OPERATIONS = 10;
 var NUM_INCREMENT = 0.5;
+var TOTAL_OPERATIONS = 21;
+var PADDING = 20;
+var boxFunctions = {
+  large: function large(x) {
+    return -(2 * x) + 24;
+  },
+  width: function width(x) {
+    return -(2 * x) + 20;
+  },
+  area_cut: function area_cut(x) {
+    return 4 * Math.pow(x, 2);
+  },
+  area_paper: function area_paper(x) {
+    return -(4 * Math.pow(x, 2)) + 480;
+  },
+  area_base: function area_base(x) {
+    return 4 * Math.pow(x, 2) - 88 * x + 480;
+  },
+  volume: function volume(x) {
+    return 4 * Math.pow(x, 3) - 88 * Math.pow(x, 2) + 480 * x;
+  }
+};
 
-var TOTAL_OPERATIONS = function TOTAL_OPERATIONS() {
-  var count = 0;
+var getBoxFunctions = function getBoxFunctions(key) {
+  var function_data = [];
 
-  for (var i = 0; i < NUM_OPERATIONS; i += NUM_INCREMENT) {
-    count += 1;
+  for (var i = 0; i <= NUM_OPERATIONS; i += NUM_INCREMENT) {
+    function_data.push(boxFunctions["".concat(key)](i));
   }
 
-  return count;
+  return function_data;
+};
+
+var calcValYMarker = function calcValYMarker() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var space_y_marker = arguments.length > 1 ? arguments[1] : undefined;
+  var greater_num = 0;
+  data.forEach(function (num) {
+    if (num > greater_num) {
+      greater_num = num;
+    }
+  });
+  var val_y_marker = greater_num / 10 / space_y_marker;
+  return val_y_marker;
 };
 
 var numberToCloserZero = function numberToCloserZero() {
@@ -88,24 +123,31 @@ var drawSquareOnCanvas = function drawSquareOnCanvas(canvas, xi, yi, w, h) {
   }
 };
 
-var drawAxis = function drawAxis(canvas, canvas_width, canvas_height) {
-  var padding = 20;
-  var yi_axis = canvas_height - padding;
-  var xi_axis = canvas_width - padding;
-  var space_x_markers = xi_axis / TOTAL_OPERATIONS() + 1;
-  var space_y_markers = yi_axis / 10;
-  drawLineOnCanvas(canvas, xi_axis, yi_axis, padding, yi_axis, color = hex_colors.axis, marker = 4);
-  drawLineOnCanvas(canvas, padding, yi_axis, padding, padding, color = hex_colors.axis, marker = 4);
+var drawAxis = function drawAxis(canvas) {
+  var axis = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var space_markers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  drawLineOnCanvas(canvas, axis.x, axis.y, PADDING, axis.y, color = hex_colors.axis, marker = 4);
+  drawLineOnCanvas(canvas, PADDING, axis.y, PADDING, PADDING, color = hex_colors.axis, marker = 4);
 
-  for (var xi_marker = space_x_markers; xi_marker < xi_axis; xi_marker += space_x_markers) {
-    drawSquareOnCanvas(canvas, xi_marker, yi_axis - padding / 4, 1, padding / 2, color = hex_colors.axis, marker = 2);
+  for (var xi_marker = space_markers.x; xi_marker <= axis.x; xi_marker += space_markers.x) {
+    drawSquareOnCanvas(canvas, xi_marker, axis.y - PADDING / 4, 1, PADDING / 2, color = hex_colors.axis, marker = 2);
   }
 
-  for (var yi_marker = yi_axis; yi_marker > padding; yi_marker -= space_y_markers) {
-    drawSquareOnCanvas(canvas, padding - padding / 4, yi_marker, padding / 2, 1, color = hex_colors.axis, marker = 2);
+  for (var yi_marker = axis.y; yi_marker > PADDING; yi_marker -= space_markers.y) {
+    drawSquareOnCanvas(canvas, PADDING - PADDING / 4, yi_marker, PADDING / 2, 1, color = hex_colors.axis, marker = 2);
   }
 
-  drawSquareOnCanvas(canvas, padding - padding / 4, yi_axis - padding / 4, padding / 2, padding / 2, color = hex_colors.axis, marker = 2, fill = true);
+  drawSquareOnCanvas(canvas, PADDING - PADDING / 4, axis.y - PADDING / 4, PADDING / 2, PADDING / 2, color = hex_colors.axis, marker = 2, fill = true);
+};
+
+var drawDataWithLines = function drawDataWithLines(canvas) {
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var axis = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var space_markers = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  for (var x_data = space_markers.x * 2, i = 0; x_data <= axis.x; x_data += space_markers.x, i += 1) {
+    drawLineOnCanvas(canvas, x_data, axis.y, x_data, data[i], color = hex_colors.stats, marker = 5);
+  }
 };
 
 window.onload = function () {
@@ -117,8 +159,22 @@ window.onload = function () {
     element["obj"] = element.html.getContext("2d");
     element["width"] = numberToCloserZero(Math.floor(element.html.getBoundingClientRect().width));
     element["height"] = numberToCloserZero(Math.floor(element.html.getBoundingClientRect().height));
+    element["axis"] = {
+      x: element.width - PADDING,
+      y: element.height - PADDING
+    };
+    element["space_markers"] = {
+      x: element.axis.x / (TOTAL_OPERATIONS + 1),
+      y: element.axis.y / 11
+    };
+    element["data"] = getBoxFunctions(key);
+    element["val_y_marker"] = calcValYMarker(element.data, element.space_markers.y);
+    element["canvas_data"] = element.data.map(function (num) {
+      return -(num / element.val_y_marker) + (element.height - PADDING);
+    });
     element.html.width = element.width;
     element.html.height = element.height;
-    drawAxis(element.obj, element.width, element.height);
+    drawAxis(element.obj, element.axis, element.space_markers);
+    drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);
   });
 };
