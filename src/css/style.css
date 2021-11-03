@@ -42,6 +42,16 @@
   border: 2px solid #00249c;
   border-radius: 0.25rem;
   padding: 0.5rem;
+  position: sticky;
+  top: 2em;
+}
+.nav-wrapper .nav .nav__title {
+  margin: 0.25rem 0;
+  border-left: 2px solid #00249c;
+  border-bottom: 2px solid #00249c;
+  padding: 0.25rem;
+  font: 600 1.2em "Roboto Condensed", sans-serif;
+  text-decoration: underline solid #00249c 2px;
 }
 .nav-wrapper .nav .nav__list {
   list-style: none;
@@ -94,7 +104,7 @@
   margin: 0.15rem auto;
   border: 2px solid #00249c;
   border-radius: 0.25rem;
-  padding: 0.1rem;
+  padding: 0.5rem 1rem;
   color: #00249c;
   font: 400 1em "Roboto Slab", serif;
   text-align: center;
@@ -116,6 +126,39 @@
   color: #000;
   font: 500 1em "Roboto Mono", sans-serif;
 }
+.content .table {
+  width: 95%;
+  margin: 1rem auto;
+  display: grid;
+  grid-template: 1fr/repeat(7, 1fr);
+  gap: 0.25rem;
+}
+.content .table .t__category {
+  margin-top: 0.25rem;
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #3c3fff;
+  color: #fff;
+  font: 400 1.2em "Roboto Condensed", sans-serif;
+  text-align: center;
+}
+.content .table .t__data {
+  margin-top: 0.25rem;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  color: #000;
+  font: 400 1em "Roboto Mono", monospace;
+  text-align: center;
+}
+.content .table .t__data:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.content .table .t__data:nth-child(even) {
+  background-color: #d0d0d0;
+}
+.content .article {
+  padding: 0.5rem 0;
+}
 .content .section {
   margin: 1rem 0;
   border: 2px solid #000152;
@@ -127,9 +170,17 @@
 }
 .content .section .content-wrapper {
   grid-area: content;
-  display: grid;
-  grid-template: auto 1fr 1fr/1fr;
+  display: flex;
+  flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
+  align-content: flex-start;
+}
+.content .section .content-wrapper .text,
+.content .section .content-wrapper .title,
+.content .section .content-wrapper .semititle {
+  text-align: center;
+  margin: 0.5rem auto;
 }
 .content .section .canvas-wrapper {
   margin: 0.15rem;

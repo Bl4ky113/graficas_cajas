@@ -7,6 +7,17 @@ const obj_canvas = {
   volume: { html: document.getElementById("canvas_volume") }
 };
 
+const labels_canvas = {
+  large: document.getElementById("label_large"),
+  width: document.getElementById("label_width"),
+  area_cut: document.getElementById("label_area_cut"),
+  area_paper: document.getElementById("label_area_paper"),
+  area_base: document.getElementById("label_area_base"),
+  volume: document.getElementById("label_volume")
+};
+
+const table_functions = document.getElementById("table_formulas");
+
 const hex_colors = {
   axis: "#000055",
   stats: "#3c3cff"
@@ -36,12 +47,12 @@ const getBoxFunctions = (key) => {
   return function_data;
 };
 
-const calcValYMarker = (data=[], space_y_marker) => {
+const calcValYMarker = (data=[]) => {
   let greater_num = 0;
   
   data.forEach(num => { if (num > greater_num) { greater_num = num; } });
   
-  let val_y_marker = (greater_num / 10) / space_y_marker;
+  let val_y_marker = (greater_num / 10);
   return val_y_marker;
 };
 
@@ -101,7 +112,31 @@ const drawDataWithLines = (canvas, data=[], axis={}, space_markers={}) => {
   }
 };
 
+const pushTableData = (data=[], category="") => {
+  let HTML_obj = `<div>`;
+  
+  let cleaned_category = [...category];
+  if (cleaned_category.includes("_")) {
+    cleaned_category[cleaned_category.indexOf("_")] = " ";
+  }
+  cleaned_category = cleaned_category.join("");
+  cleaned_category = cleaned_category.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+
+
+  HTML_obj += `<div class="t__category">${cleaned_category}</div>`;
+  data.forEach(e => HTML_obj += `<div class="t__data">${e}</div>`);
+
+  HTML_obj += `</div>`;
+
+  table_functions.innerHTML += HTML_obj;
+};
+
 window.onload = () => {
+  let num_arr = [];
+  for (let i = 0; i <= NUM_OPERATIONS; i += NUM_INCREMENT) { num_arr.push(i); }
+
+  pushTableData(num_arr, "x");
+
   Object.entries(obj_canvas).forEach(([key, element]) => {
     element[`obj`] = element.html.getContext("2d");
     element[`width`] = numberToCloserZero(Math.floor(element.html.getBoundingClientRect().width));
@@ -116,11 +151,13 @@ window.onload = () => {
     };
     element[`data`] = getBoxFunctions(key);
     element[`val_y_marker`] = calcValYMarker(element.data, element.space_markers.y);
-    element[`canvas_data`] = element.data.map(num => - (num / element.val_y_marker) + (element.height - PADDING));
+    element[`canvas_data`] = element.data.map(num => - (num / (element.val_y_marker / element.space_markers.y)) + (element.height - PADDING));
 
     element.html.width = element.width;
     element.html.height = element.height;
 
+    labels_canvas[`${key}`].innerHTML = `La Medida de cada Marca en el Eje Y es de: ${element.val_y_marker}`;
+    pushTableData(element.data, key);
     drawAxis(element.obj, element.axis, element.space_markers);
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);
   });

@@ -8,6 +8,14 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 var obj_canvas = {
   large: {
     html: document.getElementById("canvas_large")
@@ -28,6 +36,15 @@ var obj_canvas = {
     html: document.getElementById("canvas_volume")
   }
 };
+var labels_canvas = {
+  large: document.getElementById("label_large"),
+  width: document.getElementById("label_width"),
+  area_cut: document.getElementById("label_area_cut"),
+  area_paper: document.getElementById("label_area_paper"),
+  area_base: document.getElementById("label_area_base"),
+  volume: document.getElementById("label_volume")
+};
+var table_functions = document.getElementById("table_formulas");
 var hex_colors = {
   axis: "#000055",
   stats: "#3c3cff"
@@ -69,14 +86,13 @@ var getBoxFunctions = function getBoxFunctions(key) {
 
 var calcValYMarker = function calcValYMarker() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var space_y_marker = arguments.length > 1 ? arguments[1] : undefined;
   var greater_num = 0;
   data.forEach(function (num) {
     if (num > greater_num) {
       greater_num = num;
     }
   });
-  var val_y_marker = greater_num / 10 / space_y_marker;
+  var val_y_marker = greater_num / 10;
   return val_y_marker;
 };
 
@@ -150,7 +166,39 @@ var drawDataWithLines = function drawDataWithLines(canvas) {
   }
 };
 
+var pushTableData = function pushTableData() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var category = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var HTML_obj = "<div>";
+
+  var cleaned_category = _toConsumableArray(category);
+
+  if (cleaned_category.includes("_")) {
+    cleaned_category[cleaned_category.indexOf("_")] = " ";
+  }
+
+  cleaned_category = cleaned_category.join("");
+  cleaned_category = cleaned_category.replace(/\w\S*/g, function (w) {
+    return w.replace(/^\w/, function (c) {
+      return c.toUpperCase();
+    });
+  });
+  HTML_obj += "<div class=\"t__category\">".concat(cleaned_category, "</div>");
+  data.forEach(function (e) {
+    return HTML_obj += "<div class=\"t__data\">".concat(e, "</div>");
+  });
+  HTML_obj += "</div>";
+  table_functions.innerHTML += HTML_obj;
+};
+
 window.onload = function () {
+  var num_arr = [];
+
+  for (var i = 0; i <= NUM_OPERATIONS; i += NUM_INCREMENT) {
+    num_arr.push(i);
+  }
+
+  pushTableData(num_arr, "x");
   Object.entries(obj_canvas).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         key = _ref2[0],
@@ -170,10 +218,12 @@ window.onload = function () {
     element["data"] = getBoxFunctions(key);
     element["val_y_marker"] = calcValYMarker(element.data, element.space_markers.y);
     element["canvas_data"] = element.data.map(function (num) {
-      return -(num / element.val_y_marker) + (element.height - PADDING);
+      return -(num / (element.val_y_marker / element.space_markers.y)) + (element.height - PADDING);
     });
     element.html.width = element.width;
     element.html.height = element.height;
+    labels_canvas["".concat(key)].innerHTML = "La Medida de cada Marca en el Eje Y es de: ".concat(element.val_y_marker);
+    pushTableData(element.data, key);
     drawAxis(element.obj, element.axis, element.space_markers);
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);
   });

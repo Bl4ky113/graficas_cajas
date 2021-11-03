@@ -6,6 +6,9 @@ $color_dark: rgb(0, 1, 82);
 $color_black: #000;
 $color_white: #fff;
 
+$color_dark-white1: #f0f0f0;
+$color_dark-white2: #d0d0d0;
+
 * {
   margin: 0;
   padding: 0;
@@ -60,6 +63,19 @@ $color_white: #fff;
     border: 2px solid $color_base;
     border-radius: 0.25rem;
     padding: 0.5rem;
+
+    position: sticky;
+    top: 2em;
+
+    .nav__title {
+      margin: 0.25rem 0;
+      border-left: 2px solid $color_base;
+      border-bottom: 2px solid $color_base;
+      padding: 0.25rem;
+
+      font: 600 1.2em 'Roboto Condensed', sans-serif;
+      text-decoration: underline solid $color_base 2px;
+    }
 
     .nav__list {
       list-style: none;
@@ -131,7 +147,7 @@ $color_white: #fff;
     margin: 0.15rem auto;
     border: 2px solid $color_base;
     border-radius: 0.25rem;
-    padding: 0.1rem;
+    padding: 0.5rem 1rem;
 
     color: $color_base;
     font: 400 1em "Roboto Slab", serif;
@@ -159,6 +175,43 @@ $color_white: #fff;
     font: 500 1em "Roboto Mono", sans-serif;
   }
 
+  .table {
+    width: 95%;
+
+    margin: 1rem auto;
+
+    display: grid;
+    grid-template: 1fr / repeat(7, 1fr);
+    gap: 0.25rem;
+
+    .t__category {
+      margin-top: 0.25rem;
+      border-radius: 0.35rem;
+      padding: 0.25rem 0.5rem;
+      
+      background-color: $color_light;
+      
+      color: $color-white;
+      font: 400 1.2em "Roboto Condensed", sans-serif;
+      text-align: center;
+    }
+    
+    .t__data {
+      margin-top: 0.25rem;
+      border-radius: 0.5rem;
+      padding: 0.2rem 0.4rem;
+
+      color: $color-black;
+      font: 400 1em 'Roboto Mono', monospace;
+      text-align: center;
+     
+      &:nth-child(odd) { background-color: $color_dark-white1; }
+      &:nth-child(even) { background-color: $color_dark-white2; }
+    }
+  }
+
+  .article { padding: 0.5rem 0; }
+
   .section {
     margin: 1rem 0;
     border: 2px solid $color_dark;
@@ -172,9 +225,16 @@ $color_white: #fff;
     .content-wrapper { 
       grid-area: content; 
 
-      display: grid;
-      grid-template: auto 1fr 1fr / 1fr;
+      display: flex;
+      flex-flow: row wrap;
+
       align-items: center;
+      justify-content: center;
+      align-content: flex-start;
+
+      .text, 
+      .title,
+      .semititle { text-align: center; margin: 0.5rem auto; }
     }
     .canvas-wrapper {
       margin: 0.15rem;
