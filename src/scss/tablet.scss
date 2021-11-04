@@ -1,0 +1,46 @@
+// screen and (max-width: 920px)
+
+$color_base: rgb(0, 36, 156);
+$color_light: rgb(60, 63, 255);
+$color_dark: rgb(0, 1, 82);
+
+$color_black: #000;
+$color_white: #fff;
+
+$color_dark-white1: #f0f0f0;
+$color_dark-white2: #d0d0d0;
+
+.wrapper {
+  grid-template: minmax(5vh, auto) auto 1fr minmax(5vh, auto) / 5% auto 5%;
+  grid-template-areas: "header  header  header "
+                        "blank_1 nav     blank_2"
+                        "blank_1 content blank_2"
+                        "footer  footer  footer ";
+}
+
+.nav-wrapper {
+  .nav {
+    width: 80%;
+  }
+}
+
+.content {
+  padding: 1rem 0.5rem;
+
+  .table { 
+    width: 100%; 
+
+    .t__category {
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  .section {
+    grid-template: auto auto / 1fr;
+    grid-template-areas: "canvas "
+                         "content";
+                         
+    .canvas-warper { margin: 0.15rem; }
+  }
+}

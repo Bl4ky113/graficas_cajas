@@ -18,6 +18,8 @@ const labels_canvas = {
 
 const table_functions = document.getElementById("table_formulas");
 
+const min_screen_width = window.matchMedia("(max-width: 655px)");
+
 const hex_colors = {
   axis: "#000055",
   stats: "#3c3cff"
@@ -95,7 +97,7 @@ const drawAxis = (canvas, axis={}, space_markers={}) => {
   drawLineOnCanvas(canvas, axis.x, axis.y, PADDING, axis.y, color=hex_colors.axis, marker=4);
   drawLineOnCanvas(canvas, PADDING, axis.y, PADDING, PADDING, color=hex_colors.axis, marker=4);
   
-  for (let xi_marker = space_markers.x; xi_marker <= axis.x; xi_marker += space_markers.x) {
+  for (let xi_marker = space_markers.x * 2; xi_marker <= axis.x; xi_marker += space_markers.x) {
     drawSquareOnCanvas(canvas, xi_marker, (axis.y - (PADDING / 4)), 1, (PADDING / 2), color=hex_colors.axis, marker=2);
   }
 
@@ -135,7 +137,9 @@ window.onload = () => {
   let num_arr = [];
   for (let i = 0; i <= NUM_OPERATIONS; i += NUM_INCREMENT) { num_arr.push(i); }
 
-  pushTableData(num_arr, "x");
+  if (!min_screen_width.matches) {
+    pushTableData(num_arr, "x");
+  }
 
   Object.entries(obj_canvas).forEach(([key, element]) => {
     element[`obj`] = element.html.getContext("2d");
@@ -157,6 +161,7 @@ window.onload = () => {
     element.html.height = element.height;
 
     labels_canvas[`${key}`].innerHTML = `La Medida de cada Marca en el Eje Y es de: ${element.val_y_marker}`;
+    if (min_screen_width.matches) { pushTableData(num_arr, "x"); }
     pushTableData(element.data, key);
     drawAxis(element.obj, element.axis, element.space_markers);
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);

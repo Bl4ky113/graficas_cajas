@@ -1,0 +1,15 @@
+// screen and (max-width: 655px)
+
+.header {
+  .header__title { font-size: 1.5rem; }
+}
+
+.content {
+  .formula {
+    padding: 0;
+  }
+
+  .table {
+    grid-template: auto / 1fr 1fr;
+  }
+}

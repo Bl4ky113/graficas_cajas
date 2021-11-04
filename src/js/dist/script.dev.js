@@ -45,6 +45,7 @@ var labels_canvas = {
   volume: document.getElementById("label_volume")
 };
 var table_functions = document.getElementById("table_formulas");
+var min_screen_width = window.matchMedia("(max-width: 655px)");
 var hex_colors = {
   axis: "#000055",
   stats: "#3c3cff"
@@ -145,7 +146,7 @@ var drawAxis = function drawAxis(canvas) {
   drawLineOnCanvas(canvas, axis.x, axis.y, PADDING, axis.y, color = hex_colors.axis, marker = 4);
   drawLineOnCanvas(canvas, PADDING, axis.y, PADDING, PADDING, color = hex_colors.axis, marker = 4);
 
-  for (var xi_marker = space_markers.x; xi_marker <= axis.x; xi_marker += space_markers.x) {
+  for (var xi_marker = space_markers.x * 2; xi_marker <= axis.x; xi_marker += space_markers.x) {
     drawSquareOnCanvas(canvas, xi_marker, axis.y - PADDING / 4, 1, PADDING / 2, color = hex_colors.axis, marker = 2);
   }
 
@@ -198,7 +199,10 @@ window.onload = function () {
     num_arr.push(i);
   }
 
-  pushTableData(num_arr, "x");
+  if (!min_screen_width.matches) {
+    pushTableData(num_arr, "x");
+  }
+
   Object.entries(obj_canvas).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         key = _ref2[0],
@@ -223,6 +227,11 @@ window.onload = function () {
     element.html.width = element.width;
     element.html.height = element.height;
     labels_canvas["".concat(key)].innerHTML = "La Medida de cada Marca en el Eje Y es de: ".concat(element.val_y_marker);
+
+    if (min_screen_width.matches) {
+      pushTableData(num_arr, "x");
+    }
+
     pushTableData(element.data, key);
     drawAxis(element.obj, element.axis, element.space_markers);
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);

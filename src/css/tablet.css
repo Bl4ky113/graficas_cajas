@@ -1,0 +1,26 @@
+.wrapper {
+  grid-template: minmax(5vh, auto) auto 1fr minmax(5vh, auto)/5% auto 5%;
+  grid-template-areas: "header  header  header " "blank_1 nav     blank_2" "blank_1 content blank_2" "footer  footer  footer ";
+}
+
+.nav-wrapper .nav {
+  width: 80%;
+}
+
+.content {
+  padding: 1rem 0.5rem;
+}
+.content .table {
+  width: 100%;
+}
+.content .table .t__category {
+  position: sticky;
+  top: 0;
+}
+.content .section {
+  grid-template: auto auto/1fr;
+  grid-template-areas: "canvas " "content";
+}
+.content .section .canvas-warper {
+  margin: 0.15rem;
+}
