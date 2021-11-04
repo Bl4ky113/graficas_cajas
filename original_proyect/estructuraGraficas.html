@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Graficas en JS</title>
+    <link rel="stylesheet" href="stylesGraficas.css" />
+  </head>
+  <body>
+    <div class="inicio">
+      <h1><strong>Graficas Y Funciones en JS y Canvas.</strong></h1>
+      <h2>Hecho por Martin Steven Hernandez Ortiz del curso 90Estres.</h2>
+      <p class="textoInicio"> Haga <q>click</q> en los links de abajo para ir a la grafica que necesite.</p>
+      <div class="links">
+        <a href="#graficaL">- Grafica Large.</a><br />
+        <a href="#graficaW">- Grafica Width.</a><br />
+        <a href="#graficaD2">- Grafica Area Desperdiciada.</a><br />
+        <a href="#graficaP2">- Grafica Area del Papel.</a><br />
+        <a href="#graficaB2">- Grafica Area de la Base.</a><br />
+        <a href="#graficaV3">- Grafica Volumen de la caja.</a><br />
+      </div>
+      <p class="textoInicio"> Voy a representar las graficas en el leguaje de programacion JS y HTML usando la etiqueta Canvas.</p><hr />
+    </div>
+    <div>
+      <p class="textoInicio">
+        Esto es un canvas, por ahora este es solo una prueba.
+        Por lo tanto este Canvas solo tendra una <q>carita</q>
+      </p>
+      <p class="textoInicio">
+        UGH... Esa <q>Cara</q> mal hecha me tomo hacer mas de una hora...
+        Pero eso es un ejemplo de un uso del canvas
+      </p>
+      <div class="canvasDiv">
+        <canvas id="testCanvas" width="300" height="300"></canvas>
+      </div>
+      <hr />
+      <div class="aviso">
+        <p><strong><i>AVISO</strong></i></p>
+        <p>
+          Las graficas van a ser de cada 10 px (pixeles) 10 unidades. Esto va a hacer que las graficas sean medianamente chiquitas.
+          <br />
+          Perdon , pero solo logre por ahora que se grafiquen las respuestas en columnas y no en puntos con rectas.
+        </p>
+      </div>
+      <hr />
+      <h4 id="graficaL"><i>Grafica Large</i></h4>
+      <p class="descripcionGrafica">
+        La primera grafica es del <q>Large</q> o largo.
+        <br />Su funcion matematica es: f1(x) = L = -2x + 24;
+      </p>
+      <br />
+      <div class="canvasDiv">
+        <canvas id="graficaLCanvas" width="320" height="320"></canvas>
+      </div>
+      <hr />
+      <h4 id="graficaW"><i>Grafica Width</i></h4>
+      <p class="descripcionGrafica">
+        La segunda grafica es del <q>Width</q> o el ancho.
+        <br />Su funcion matematica es: f2(x) = W = -2x + 20;
+      </p>
+      <div class="canvasDiv">
+        <canvas id="graficaWCanvas" width="320" height="320"></canvas>
+      </div>
+      <hr />
+      <h4 id="graficaD2"><i>Grafica Papel Desperdiciado<sup>2</sup></i></h4>
+      <p class="descripcionGrafica">
+        La tercera grafica es del papel Desperdiciado<sup>2</sup>
+        <br />Su funcion matematica es: f3(x) = D = 4x<sup>2</sup>;
+      </p>
+      <div class="canvasDiv">
+        <canvas id="graficaD2Canvas" width="320" height="520"></canvas>
+      </div>
+      <hr />
+      <h4 id="graficaP2"><i>Grafica Papel<sup>2</sup> de la caja</i></h4>
+      <p class="descripcionGrafica">
+        La cuarta grafica es del papel<sup>2</sup> de la caja
+        <br />Su formula matematica es: f4(x) = P = -4x<sup>2</sup> + 480;
+      </p>
+      <div class="canvasDiv">
+        <canvas id="graficaP2Canvas" width="320" height="520"></canvas>
+      </div>
+      <hr />
+      <h4 id="graficaB2"><i>Grafica Base<sup>2</sup> de la caja</i></h4>
+      <p class="descripcionGrafica">
+        La quinta grafica es de la base<sup>2</sup> de la caja
+        <br />Su formula matematica es: f5(x) = B = 4x<sup>2</sup> - 88x + 480;
+      </p>
+      <div class="canvasDiv">
+        <canvas id="graficaB2Canvas" width="320" height="520"></canvas>
+      </div>
+      <hr />
+      <h4 id="graficaV3"><i>Grafica Volumen<sup>3</sup> de la caja</i></h4>
+      <p class="descripcionGrafica">
+        La sexta grafica es del <q>volumen<sup>3</sup></q> o la capacidad de la caja
+        <br />Su formula matematica es: f6(x) = V = 4x<sup>3</sup> - 88x<sup>2</sup> + 480x
+      </p>
+      <div class="canvasDiv">
+        <canvas id="graficaV3Canvas" width="320" height="820"></canvas>
+      </div>
+    </div>
+  <script src="funcionesGraficas.js"></script>
+  </body>
+</html>
