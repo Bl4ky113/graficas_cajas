@@ -16,6 +16,15 @@ const labels_canvas = {
   volume: document.getElementById("label_volume")
 };
 
+const btns_canvas = {
+  large: document.getElementById("large_buttons"),
+  width: document.getElementById("width_buttons"),
+  area_cut: document.getElementById("area_cut_buttons"),
+  area_paper: document.getElementById("area_paper_buttons"),
+  area_base: document.getElementById("area_base_buttons"),
+  volume: document.getElementById("volume_buttons")
+};
+
 const table_functions = document.getElementById("table_formulas");
 
 const min_screen_width = window.matchMedia("(max-width: 655px)");
@@ -93,6 +102,26 @@ const drawSquareOnCanvas = (canvas, xi, yi, w, h, color="#00000", marker=1, fill
   }
 };
 
+const drawFigureOnCanvas = (canvas, xi, yi, xf_increment, yf=[], color="#000000", marker=1, fill=false) => {
+  canvas.beginPath();
+  canvas.strokeStyle = color;
+  canvas.lineWidth = marker;
+  
+  canvas.moveTo(xi, yi);
+  for (let i = 0, xf = xi; i <= yf.length; i += 1, xf += xf_increment) {
+    canvas.lineTo(xf, yf[i]);
+  }
+  canvas.lineTo((xf_increment * (yf.length + 1)), yi);
+  canvas.lineTo(xi, yi);
+
+  if (fill) {
+    canvas.fillStyle = color;
+    canvas.fill();
+  } else {
+    canvas.stroke();
+  }
+};
+
 const drawAxis = (canvas, axis={}, space_markers={}) => {
   drawLineOnCanvas(canvas, axis.x, axis.y, PADDING, axis.y, color=hex_colors.axis, marker=4);
   drawLineOnCanvas(canvas, PADDING, axis.y, PADDING, PADDING, color=hex_colors.axis, marker=4);
@@ -113,6 +142,16 @@ const drawDataWithLines = (canvas, data=[], axis={}, space_markers={}) => {
     drawLineOnCanvas(canvas, x_data, axis.y, x_data, data[i], color=hex_colors.stats, marker=5);
   }
 };
+
+const drawDataWithSquares = (canvas, data=[], axis={}, space_markers={}) => {
+  for (let x_data = space_markers.x * 2, i = 0; x_data <= axis.x; x_data += space_markers.x, i += 1) {
+    drawSquareOnCanvas(canvas, (x_data - (PADDING / 4)), (data[i] - (PADDING / 4)), (PADDING / 4), (PADDING / 4), color=hex_colors.stats, marker=0, fill=true);
+  }
+};
+
+const drawDataWithFigures = (canvas, data=[], axis={}, space_markers={}) => {
+  drawFigureOnCanvas(canvas, space_markers.x * 2, axis.y, space_markers.x, data, color=hex_colors.stats, marker=4, fill=true);
+} 
 
 const pushTableData = (data=[], category="") => {
   let HTML_obj = `<div>`;
@@ -137,9 +176,7 @@ window.onload = () => {
   let num_arr = [];
   for (let i = 0; i <= NUM_OPERATIONS; i += NUM_INCREMENT) { num_arr.push(i); }
 
-  if (!min_screen_width.matches) {
-    pushTableData(num_arr, "x");
-  }
+  if (!min_screen_width.matches) { pushTableData(num_arr, "x"); }
 
   Object.entries(obj_canvas).forEach(([key, element]) => {
     element[`obj`] = element.html.getContext("2d");
@@ -150,7 +187,7 @@ window.onload = () => {
        y: element.height - PADDING,
     };
     element[`space_markers`] = {
-      x: element.axis.x / (TOTAL_OPERATIONS + 1),
+      x: element.axis.x / (TOTAL_OPERATIONS + 2),
       y: element.axis.y / 11
     };
     element[`data`] = getBoxFunctions(key);
@@ -160,10 +197,33 @@ window.onload = () => {
     element.html.width = element.width;
     element.html.height = element.height;
 
-    labels_canvas[`${key}`].innerHTML = `La Medida de cada Marca en el Eje Y es de: ${element.val_y_marker}`;
+    labels_canvas[`${key}`].innerHTML = `<strong>La Medida de cada Marca en el Eje Y es de: ${element.val_y_marker}</strong>`;
     if (min_screen_width.matches) { pushTableData(num_arr, "x"); }
     pushTableData(element.data, key);
-    drawAxis(element.obj, element.axis, element.space_markers);
+    // drawDataWithFigures(element.obj, element.canvas_data, element.axis, element.space_markers);
+    // drawDataWithSquares(element.obj, element.canvas_data, element.axis, element.space_markers);
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);
+    drawAxis(element.obj, element.axis, element.space_markers);
+  });
+  
+  Object.entries(btns_canvas).forEach(([key, obj]) => {
+    obj.onclick = (e) => {
+      if (e.target.className === "button") {
+        let functionName = e.target.innerHTML.split(/\s[Gg]raph/).join("");
+        if (functionName === "Area") {
+          obj_canvas[`${key}`].obj.clearRect(0, 0, obj_canvas[`${key}`].width, obj_canvas[`${key}`].height);
+          drawDataWithFigures(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].canvas_data, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+          drawAxis(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+        } else if (functionName === "Squares") {
+          obj_canvas[`${key}`].obj.clearRect(0, 0, obj_canvas[`${key}`].width, obj_canvas[`${key}`].height);
+          drawDataWithSquares(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].canvas_data, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+          drawAxis(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+        } else {
+          obj_canvas[`${key}`].obj.clearRect(0, 0, obj_canvas[`${key}`].width, obj_canvas[`${key}`].height);
+          drawDataWithLines(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].canvas_data, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+          drawAxis(obj_canvas[`${key}`].obj, obj_canvas[`${key}`].axis, obj_canvas[`${key}`].space_markers);
+        }
+      }
+    }
   });
 };

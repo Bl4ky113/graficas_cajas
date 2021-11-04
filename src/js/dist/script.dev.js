@@ -44,6 +44,14 @@ var labels_canvas = {
   area_base: document.getElementById("label_area_base"),
   volume: document.getElementById("label_volume")
 };
+var btns_canvas = {
+  large: document.getElementById("large_buttons"),
+  width: document.getElementById("width_buttons"),
+  area_cut: document.getElementById("area_cut_buttons"),
+  area_paper: document.getElementById("area_paper_buttons"),
+  area_base: document.getElementById("area_base_buttons"),
+  volume: document.getElementById("volume_buttons")
+};
 var table_functions = document.getElementById("table_formulas");
 var min_screen_width = window.matchMedia("(max-width: 655px)");
 var hex_colors = {
@@ -140,6 +148,31 @@ var drawSquareOnCanvas = function drawSquareOnCanvas(canvas, xi, yi, w, h) {
   }
 };
 
+var drawFigureOnCanvas = function drawFigureOnCanvas(canvas, xi, yi, xf_increment) {
+  var yf = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+  var color = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "#000000";
+  var marker = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 1;
+  var fill = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : false;
+  canvas.beginPath();
+  canvas.strokeStyle = color;
+  canvas.lineWidth = marker;
+  canvas.moveTo(xi, yi);
+
+  for (var i = 0, xf = xi; i <= yf.length; i += 1, xf += xf_increment) {
+    canvas.lineTo(xf, yf[i]);
+  }
+
+  canvas.lineTo(xf_increment * (yf.length + 1), yi);
+  canvas.lineTo(xi, yi);
+
+  if (fill) {
+    canvas.fillStyle = color;
+    canvas.fill();
+  } else {
+    canvas.stroke();
+  }
+};
+
 var drawAxis = function drawAxis(canvas) {
   var axis = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var space_markers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -165,6 +198,23 @@ var drawDataWithLines = function drawDataWithLines(canvas) {
   for (var x_data = space_markers.x * 2, i = 0; x_data <= axis.x; x_data += space_markers.x, i += 1) {
     drawLineOnCanvas(canvas, x_data, axis.y, x_data, data[i], color = hex_colors.stats, marker = 5);
   }
+};
+
+var drawDataWithSquares = function drawDataWithSquares(canvas) {
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var axis = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var space_markers = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  for (var x_data = space_markers.x * 2, i = 0; x_data <= axis.x; x_data += space_markers.x, i += 1) {
+    drawSquareOnCanvas(canvas, x_data - PADDING / 4, data[i] - PADDING / 4, PADDING / 4, PADDING / 4, color = hex_colors.stats, marker = 0, fill = true);
+  }
+};
+
+var drawDataWithFigures = function drawDataWithFigures(canvas) {
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var axis = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var space_markers = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  drawFigureOnCanvas(canvas, space_markers.x * 2, axis.y, space_markers.x, data, color = hex_colors.stats, marker = 4, fill = true);
 };
 
 var pushTableData = function pushTableData() {
@@ -216,7 +266,7 @@ window.onload = function () {
       y: element.height - PADDING
     };
     element["space_markers"] = {
-      x: element.axis.x / (TOTAL_OPERATIONS + 1),
+      x: element.axis.x / (TOTAL_OPERATIONS + 2),
       y: element.axis.y / 11
     };
     element["data"] = getBoxFunctions(key);
@@ -226,14 +276,41 @@ window.onload = function () {
     });
     element.html.width = element.width;
     element.html.height = element.height;
-    labels_canvas["".concat(key)].innerHTML = "La Medida de cada Marca en el Eje Y es de: ".concat(element.val_y_marker);
+    labels_canvas["".concat(key)].innerHTML = "<strong>La Medida de cada Marca en el Eje Y es de: ".concat(element.val_y_marker, "</strong>");
 
     if (min_screen_width.matches) {
       pushTableData(num_arr, "x");
     }
 
-    pushTableData(element.data, key);
-    drawAxis(element.obj, element.axis, element.space_markers);
+    pushTableData(element.data, key); // drawDataWithFigures(element.obj, element.canvas_data, element.axis, element.space_markers);
+    // drawDataWithSquares(element.obj, element.canvas_data, element.axis, element.space_markers);
+
     drawDataWithLines(element.obj, element.canvas_data, element.axis, element.space_markers);
+    drawAxis(element.obj, element.axis, element.space_markers);
+  });
+  Object.entries(btns_canvas).forEach(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        key = _ref4[0],
+        obj = _ref4[1];
+
+    obj.onclick = function (e) {
+      if (e.target.className === "button") {
+        var functionName = e.target.innerHTML.split(/\s[Gg]raph/).join("");
+
+        if (functionName === "Area") {
+          obj_canvas["".concat(key)].obj.clearRect(0, 0, obj_canvas["".concat(key)].width, obj_canvas["".concat(key)].height);
+          drawDataWithFigures(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].canvas_data, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+          drawAxis(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+        } else if (functionName === "Squares") {
+          obj_canvas["".concat(key)].obj.clearRect(0, 0, obj_canvas["".concat(key)].width, obj_canvas["".concat(key)].height);
+          drawDataWithSquares(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].canvas_data, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+          drawAxis(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+        } else {
+          obj_canvas["".concat(key)].obj.clearRect(0, 0, obj_canvas["".concat(key)].width, obj_canvas["".concat(key)].height);
+          drawDataWithLines(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].canvas_data, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+          drawAxis(obj_canvas["".concat(key)].obj, obj_canvas["".concat(key)].axis, obj_canvas["".concat(key)].space_markers);
+        }
+      }
+    };
   });
 };

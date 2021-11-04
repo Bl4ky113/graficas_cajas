@@ -130,6 +130,26 @@
   color: #000;
   font: 500 1em "Roboto Mono", sans-serif;
 }
+.content .button-wrapper {
+  padding: 2rem 1rem;
+  display: flex;
+}
+.content .button {
+  margin: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 0.35rem;
+  outline: none;
+  padding: 0.5rem;
+  background-color: #00249c;
+  color: #fff;
+  font: 400 0.85em "Roboto Mono", monospace;
+  text-align: center;
+  display: block;
+}
+.content .button:hover {
+  outline: 2px solid #00249c;
+  background-color: #3c3fff;
+}
 .content .table {
   width: 95%;
   margin: 1rem auto;
