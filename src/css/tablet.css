@@ -24,3 +24,8 @@
 .content .section .canvas-warper {
   margin: 0.15rem;
 }
+
+.footer {
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+}

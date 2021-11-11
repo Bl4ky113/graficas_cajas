@@ -44,3 +44,8 @@ $color_dark-white2: #d0d0d0;
     .canvas-warper { margin: 0.15rem; }
   }
 }
+
+.footer {
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+}
